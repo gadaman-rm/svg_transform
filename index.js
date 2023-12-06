@@ -1,6 +1,6 @@
 const x = 300;
 const y = 300;
-let d=100;
+let d=200;
 let width = d;
 let height = d;
 let cx = x + width / 2;
@@ -18,14 +18,9 @@ function rotatePoint(cx, cy, x, y, angle) {
 
 function addSvgCircle(x, y, radius, color) {
   const svgElement = document.getElementById("container");
-
-  // Create an SVG namespace
   const svgNS = "http://www.w3.org/2000/svg";
-
-  // Create an SVG circle element
   const circle = document.createElementNS(svgNS, "circle");
 
-  // Set attributes for the circle
   circle.setAttribute("cx", x);
   circle.setAttribute("cy", y);
   circle.setAttribute("r", radius);
@@ -33,7 +28,6 @@ function addSvgCircle(x, y, radius, color) {
   circle.setAttribute("stroke", "none");
   circle.setAttribute("stroke-width", 2);
 
-  // Append the circle to the body of the document
   svgElement.appendChild(circle);
 
   return circle;
@@ -66,12 +60,8 @@ function getRectangleCorners(x, y, width, height) {
 
 
 function calculateSquareDiagonal(width, height) {
-  // Using the Pythagorean theorem: d^2 = s^2 + s^2
   const diagonalSquared = Math.pow(width, 2) + Math.pow(height, 2);
-
-  // Taking the square root to get the length of the diagonal
   const diagonal = Math.sqrt(diagonalSquared);
-
   return diagonal;
 }
 
@@ -147,18 +137,3 @@ leftBottomCircle.setAttribute("cy", newBottomLeftY);
 rightBottomCircle.setAttribute("cx", newBottomRightX);
 rightBottomCircle.setAttribute("cy", newBottomRightY);
 
-
-//let rightTopCircle = addSvgCircle(corners.topRightX, corners.topRightY, 5, "blue");
-
-
-
-// rect2.setAttribute("x", x);
-// rect2.setAttribute("y", y);
-// rect2.setAttribute("width", width);
-// rect2.setAttribute("height", height);
-// rect2.setAttribute("transform-origin", `${cx+200} ${cy+200}`);
-// // rect2.setAttribute("transform", `rotate(${rotate})`);
-
-// origin2.setAttribute("cx", cx+200);
-// origin2.setAttribute("cy", cy+200);
-// origin2.setAttribute("r", "5");
