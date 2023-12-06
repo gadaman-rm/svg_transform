@@ -1,10 +1,11 @@
-const x = 200;
-const y = 200;
-let width = 100;
-let height = 100;
+const x = 300;
+const y = 300;
+let d=100;
+let width = d;
+let height = d;
 let cx = x + width / 2;
 let cy = y + height / 2;
-let rotate = 0;
+let rotate = -10;
 
 function rotatePoint(cx, cy, x, y, angle) {
   var radians = (Math.PI / 180) * angle,
@@ -64,9 +65,9 @@ function getRectangleCorners(x, y, width, height) {
 }
 
 
-function calculateSquareDiagonal(sideLength) {
+function calculateSquareDiagonal(width, height) {
   // Using the Pythagorean theorem: d^2 = s^2 + s^2
-  const diagonalSquared = Math.pow(sideLength, 2) + Math.pow(sideLength, 2);
+  const diagonalSquared = Math.pow(width, 2) + Math.pow(height, 2);
 
   // Taking the square root to get the length of the diagonal
   const diagonal = Math.sqrt(diagonalSquared);
@@ -105,15 +106,21 @@ origin1.setAttribute("r", 5);
 
 orbit1.setAttribute("cx", cx);
 orbit1.setAttribute("cy", cy);
-orbit1.setAttribute("r", calculateSquareDiagonal(width) / 2);
+orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
 
 
 let corners = getRectangleCorners(x, y, width, height);
 
 
-let leftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "blue");
-let righttTopCircle = addSvgCircle(corners.topRightX, corners.topRightY, 5, "blue");
-let leftBottomCircle = addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "blue");
+addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red");
+addSvgCircle(corners.topRightX, corners.topRightY, 5, "green");
+addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "yellow");
+addSvgCircle(corners.bottomRightX, corners.bottomRightY, 5, "blue");
+
+
+let leftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red");
+let righttTopCircle = addSvgCircle(corners.topRightX, corners.topRightY, 5, "green");
+let leftBottomCircle = addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "yellow");
 let rightBottomCircle = addSvgCircle(corners.bottomRightX, corners.bottomRightY, 5, "blue");
 
 
