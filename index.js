@@ -1,11 +1,11 @@
 const x = 300;
 const y = 300;
-let d=200;
+let d=300;
 let width = d;
 let height = d;
 let cx = x + width / 2;
 let cy = y + height / 2;
-let rotate = -10;
+let rotate = -20;
 
 function rotatePoint(cx, cy, x, y, angle) {
   var radians = (Math.PI / 180) * angle,
@@ -83,6 +83,7 @@ const rect4 = document.querySelector("#rect4");
 const origin4 = document.querySelector("#origin4");
 const orbit4 = document.querySelector("#orbit4");
 
+
 rect1.setAttribute("x", x);
 rect1.setAttribute("y", y);
 rect1.setAttribute("width", width);
@@ -104,13 +105,13 @@ let corners = getRectangleCorners(x, y, width, height);
 
 addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red");
 addSvgCircle(corners.topRightX, corners.topRightY, 5, "green");
-addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "yellow");
+addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "purple");
 addSvgCircle(corners.bottomRightX, corners.bottomRightY, 5, "blue");
 
 
 let leftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red");
 let righttTopCircle = addSvgCircle(corners.topRightX, corners.topRightY, 5, "green");
-let leftBottomCircle = addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "yellow");
+let leftBottomCircle = addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "purple");
 let rightBottomCircle = addSvgCircle(corners.bottomRightX, corners.bottomRightY, 5, "blue");
 
 
