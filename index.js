@@ -184,6 +184,12 @@ let righttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 5, "gr
 let leftBottomCircle = addSvgCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
 let rightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" );
 
+line1.setAttribute("x1", cx);
+line1.setAttribute("y1", cy);
+line1.setAttribute("x2", corners.topLeftX);
+line1.setAttribute("y2", corners.topLeftY);
+
+
 // let moveMoventX=leftTopCircle.getAttribute("cx")-pastLeftTopCircle.getAttribute("cx");
 // let moveMoventY=leftTopCircle.getAttribute("cy")-pastLeftTopCircle.getAttribute("cy");
 
@@ -247,3 +253,14 @@ setTimeout(() => {
   y=200;
   moveShape();
 }, 6000);
+
+
+setTimeout(() => {
+  let d=400;
+  width = d;
+  height = d;
+  cx = x + width / 2;
+  cy = y + height / 2;
+  makeNewSize();
+}, 8000);
+
