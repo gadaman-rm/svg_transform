@@ -63,90 +63,13 @@ function calculateSquareDiagonal(width, height) {
   return diagonal;
 }
 
-function rotateShape(rotate)
-{
-  let x=parseInt(rect1.getAttribute("x"));
-  let y=parseInt(rect1.getAttribute("y"));
-  let width=parseInt(rect1.getAttribute("width"));
-  let height=parseInt(rect1.getAttribute("height"));
-  let cx = x + width / 2;
-  let cy = y + height / 2;
-
-  console.log(`x:${x} y:${y}`);
-  console.log(`width:${width} height:${height}`);
-  console.log(`cx:${cx} cy:${cy}`);  
-
-  rect1.setAttribute("transform-origin", `${cx} ${cy}`);
-  rect1.setAttribute("transform", `rotate(${rotate})`);
-
+function redrawHelpers() {
   let corners = getRectangleCorners(x, y, width, height);
 
-  const { newX: newTopLeftX, newY: newTopLeftY } = rotatePoint(cx, cy, corners.topLeftX, corners.topLeftY, rotate * -1);
-  const { newX: newTopRightX, newY: newTopRightY } = rotatePoint(cx, cy, corners.topRightX, corners.topRightY, rotate * -1);
-  const { newX: newBottomLeftX, newY: newBottomLeftY } = rotatePoint(cx, cy, corners.bottomLeftX, corners.bottomLeftY, rotate * -1);
-  const { newX: newBottomRightX, newY: newBottomRightY } = rotatePoint(cx, cy, corners.bottomRightX, corners.bottomRightY, rotate * -1);
-
-  line1.setAttribute("x1", cx);
-  line1.setAttribute("y1", cy);
-  line1.setAttribute("x2", newTopLeftX);
-  line1.setAttribute("y2", newTopLeftY);
-
-  leftTopCircle.setAttribute("cx", newTopLeftX);
-  leftTopCircle.setAttribute("cy", newTopLeftY);
-
-  righttTopCircle.setAttribute("cx", newTopRightX);
-  righttTopCircle.setAttribute("cy", newTopRightY);
-
-  leftBottomCircle.setAttribute("cx", newBottomLeftX);
-  leftBottomCircle.setAttribute("cy", newBottomLeftY);
-
-  pastLeftTopCircle.setAttribute("cx", corners.topLeftX);
-  pastLeftTopCircle.setAttribute("cy", corners.topLeftY);
-
-  pastRighttTopCircle.setAttribute("cx", corners.topRightX);
-  pastRighttTopCircle.setAttribute("cy", corners.topRightY);
-
-  pastLeftBottomCircle.setAttribute("cx", corners.bottomLeftX);
-  pastLeftBottomCircle.setAttribute("cy", corners.bottomLeftY);
-
-  pastRightBottomCircle.setAttribute("cx", corners.bottomRightX);
-  pastRightBottomCircle.setAttribute("cy", corners.bottomRightY);
-
-
-  origin1.setAttribute("cx", cx);
-  origin1.setAttribute("cy", cy);
-  origin1.setAttribute("r", 5);
-
-  orbit1.setAttribute("cx", cx);
-  orbit1.setAttribute("cy", cy);
-  orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
-}
-
-function makeNewSize(width,height)
-{
-  let x=parseInt(rect1.getAttribute("x"));
-  let y=parseInt(rect1.getAttribute("y"));
-  let cx = x + width / 2;
-  let cy = y + height / 2;
-  //let rotate=0;
-
-  rect1.setAttribute("width", width);
-  rect1.setAttribute("height", height);
-
-  console.log(`x:${x} y:${y}`);
-  console.log(`width:${width} height:${height}`);
-  console.log(`cx:${cx} cy:${cy}`);  
-
-  rect1.setAttribute("transform-origin", `${cx} ${cy}`);
-  rect1.setAttribute("transform", `rotate(${rotate})`);
-
-  let corners = getRectangleCorners(x, y, width, height);
-
-  const { newX: newTopLeftX, newY: newTopLeftY } = rotatePoint(cx, cy, corners.topLeftX, corners.topLeftY, rotate * -1);
-  const { newX: newTopRightX, newY: newTopRightY } = rotatePoint(cx, cy, corners.topRightX, corners.topRightY, rotate * -1);
-  const { newX: newBottomLeftX, newY: newBottomLeftY } = rotatePoint(cx, cy, corners.bottomLeftX, corners.bottomLeftY, rotate * -1);
-  const { newX: newBottomRightX, newY: newBottomRightY } = rotatePoint(cx, cy, corners.bottomRightX, corners.bottomRightY, rotate * -1);
-
+  const { newX: newTopLeftX, newY: newTopLeftY } = rotatePoint( cx, cy, corners.topLeftX, corners.topLeftY, rotate * -1 );
+  const { newX: newTopRightX, newY: newTopRightY } = rotatePoint( cx, cy, corners.topRightX, corners.topRightY, rotate * -1 );
+  const { newX: newBottomLeftX, newY: newBottomLeftY } = rotatePoint( cx, cy, corners.bottomLeftX, corners.bottomLeftY, rotate * -1 );
+  const { newX: newBottomRightX, newY: newBottomRightY } = rotatePoint( cx, cy, corners.bottomRightX, corners.bottomRightY, rotate * -1 );
 
   line1.setAttribute("x1", cx);
   line1.setAttribute("y1", cy);
@@ -177,7 +100,6 @@ function makeNewSize(width,height)
   pastRightBottomCircle.setAttribute("cx", corners.bottomRightX);
   pastRightBottomCircle.setAttribute("cy", corners.bottomRightY);
 
-
   origin1.setAttribute("cx", cx);
   origin1.setAttribute("cy", cy);
   origin1.setAttribute("r", 5);
@@ -187,11 +109,40 @@ function makeNewSize(width,height)
   orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
 }
 
+function rotateShape(rotate) {
+  let x = parseInt(rect1.getAttribute("x"));
+  let y = parseInt(rect1.getAttribute("y"));
+  let width = parseInt(rect1.getAttribute("width"));
+  let height = parseInt(rect1.getAttribute("height"));
+  let cx = x + width / 2;
+  let cy = y + height / 2;
+
+  rect1.setAttribute("transform-origin", `${cx} ${cy}`);
+  rect1.setAttribute("transform", `rotate(${rotate})`);
+
+  redrawHelpers();
+}
+
+function makeNewSize(width, height) {
+  let x = parseInt(rect1.getAttribute("x"));
+  let y = parseInt(rect1.getAttribute("y"));
+  let cx = x + width / 2;
+  let cy = y + height / 2;
+  //let rotate=0;
+
+  rect1.setAttribute("width", width);
+  rect1.setAttribute("height", height);
+
+  rect1.setAttribute("transform-origin", `${cx} ${cy}`);
+  rect1.setAttribute("transform", `rotate(${rotate})`);
+
+  redrawHelpers();
+}
+
 const rect1 = document.querySelector("#rect1");
 const origin1 = document.querySelector("#origin1");
 const orbit1 = document.querySelector("#orbit1");
 const line1 = document.querySelector("#line1");
-
 
 rect1.setAttribute("x", x);
 rect1.setAttribute("y", y);
@@ -208,18 +159,15 @@ orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
 
 let corners = getRectangleCorners(x, y, width, height);
 
-let pastLeftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red");
-let pastRighttTopCircle = addSvgCircle(corners.topRightX, corners.topRightY, 5, "green");
-let pastLeftBottomCircle = addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "purple");
-let pastRightBottomCircle = addSvgCircle(corners.bottomRightX, corners.bottomRightY, 5, "blue");
+let pastLeftTopCircle = addSvgCircle( corners.topLeftX, corners.topLeftY, 5, "red" ); 
+let pastRighttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
+let pastLeftBottomCircle = addSvgCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
+let pastRightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" ); 
 
-
-let leftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red");
-let righttTopCircle = addSvgCircle(corners.topRightX, corners.topRightY, 5, "green");
-let leftBottomCircle = addSvgCircle(corners.bottomLeftX, corners.bottomLeftY, 5, "purple");
-let rightBottomCircle = addSvgCircle(corners.bottomRightX, corners.bottomRightY, 5, "blue");
-
-
+let leftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red"); 
+let righttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
+let leftBottomCircle = addSvgCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
+let rightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" );
 
 // let moveMoventX=leftTopCircle.getAttribute("cx")-pastLeftTopCircle.getAttribute("cx");
 // let moveMoventY=leftTopCircle.getAttribute("cy")-pastLeftTopCircle.getAttribute("cy");
@@ -243,7 +191,22 @@ let rightBottomCircle = addSvgCircle(corners.bottomRightX, corners.bottomRightY,
 // rect1.setAttribute("transform-origin", `${newCx} ${newCy}`);
 // rect1.setAttribute("transform", `rotate(${rotate})`);
 
+rotate = 20;
+rotateShape(rotate);
 
-makeNewSize(300,300);
-rotateShape(20);
+let d=400;
+width = d;
+height = d;
+cx = x + width / 2;
+cy = y + height / 2;
+
+setTimeout(() => {
+  makeNewSize(width, height);
+}, 2000);
+
+
+// setTimeout(() => {
+//   rotate = 30;
+//   rotateShape(rotate);
+// }, 4000);
 
