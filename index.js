@@ -14,6 +14,8 @@ let pastCx=pastX + pastWidth / 2;
 let pastCy=pastY + pastHeight / 2;
 let pastRotate=rotate;
 
+let chageOnResizeX=0;
+let chageOnResizeY=0;
 
 function changeProperty(newProperty)
 {
@@ -162,11 +164,23 @@ function rotateShape() {
 }
 
 function makeNewSize() {
-  let corners = getRectangleCorners(x, y, pastWidth, pastHeight);
-  const { newX: pastTopLeftX, newY: pastTopLeftY } = rotatePoint( pastCx, pastCy, corners.topLeftX, corners.topLeftY, rotate * -1 );
-  console.log(`pastX-x= ${pastTopLeftX-x}`);
-  console.log(`pastY-y= ${pastTopLeftY-y}`);
-  addSvgCircle(pastTopLeftX, pastTopLeftY, 5, "green");
+  let pastCorners = getRectangleCorners(x, y, pastWidth, pastHeight);
+  const { newX: pastTopLeftX, newY: pastTopLeftY } = rotatePoint( pastCx, pastCy, pastCorners.topLeftX, pastCorners.topLeftY, rotate * -1 );
+  // console.log(`pastX-x= ${pastTopLeftX-x}`);
+  // console.log(`pastY-y= ${pastTopLeftY-y}`);
+  // addSvgCircle(pastTopLeftX, pastTopLeftY, 5, "green");
+
+  let newCorners = getRectangleCorners(x, y, width, height);
+  const { newX: newTopLeftX, newY: newTopLeftY } = rotatePoint( cx, cy, newCorners.topLeftX, newCorners.topLeftY, rotate * -1 );
+  // console.log(`newX-x= ${newTopLeftX-x}`);
+  // console.log(`newY-y= ${newTopLeftY-y}`);
+  // addSvgCircle(newTopLeftX, newTopLeftY, 5, "blue");
+
+  chageOnResizeX=newTopLeftX-pastTopLeftX;
+  chageOnResizeY=newTopLeftY-pastTopLeftY;
+
+  console.log(`chageOnResizeX= ${chageOnResizeX}`);
+  console.log(`chageOnResizeY= ${chageOnResizeY}`);
 
   rect1.setAttribute("width", width);
   rect1.setAttribute("height", height);
@@ -265,7 +279,7 @@ line1.setAttribute("y2", corners.topLeftY);
 // }, 2000);
 
 setTimeout(() => {
-  let newProperty={x:x,y:y,width:width,height:height,rotate:10};
+  let newProperty={x:x,y:y,width:width,height:height,rotate:0};
   changeProperty(newProperty);
   rotateShape();
 }, 2000);
@@ -277,7 +291,22 @@ setTimeout(() => {
 // }, 6000);
 
 setTimeout(() => {
-  let newProperty={x:x,y:y,width:width*2,height:height*2,rotate:10};
+  let newProperty={x:x,y:y,width:width*2,height:height,rotate:rotate};
   changeProperty(newProperty);
   makeNewSize();
 }, 4000);
+
+setTimeout(() => {
+  let newProperty={x:x-chageOnResizeX,y:y-chageOnResizeY,width:width,height:height,rotate:rotate};
+  changeProperty(newProperty);
+  moveShape();
+  //makeNewSize();
+}, 4001);
+
+
+setTimeout(() => {
+  let newProperty={x:x+200,y:y,width:width,height:height,rotate:rotate};
+  changeProperty(newProperty);
+  moveShape();
+  //makeNewSize();
+}, 6000);
