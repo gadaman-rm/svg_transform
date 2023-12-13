@@ -17,6 +17,11 @@ let pastRotate=rotate;
 let chageOnResizeX=0;
 let chageOnResizeY=0;
 
+const rect1 = document.querySelector("#rect1");
+const origin1 = document.querySelector("#origin1");
+const orbit1 = document.querySelector("#orbit1");
+const line1 = document.querySelector("#line1");
+
 function changeProperty(newProperty)
 {
   pastX=x;
@@ -189,10 +194,6 @@ function makeNewSize() {
   redrawHelpers();
 }
 
-const rect1 = document.querySelector("#rect1");
-const origin1 = document.querySelector("#origin1");
-const orbit1 = document.querySelector("#orbit1");
-const line1 = document.querySelector("#line1");
 
 rect1.setAttribute("x", x);
 rect1.setAttribute("y", y);
@@ -207,7 +208,7 @@ orbit1.setAttribute("cx", cx);
 orbit1.setAttribute("cy", cy);
 orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
 
-let corners = getRectangleCorners(x, y, width, height);
+const corners = getRectangleCorners(x, y, width, height);
 
 let pastLeftTopCircle = addSvgCircle( corners.topLeftX, corners.topLeftY, 0, "red" ); 
 let pastRighttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 0, "green" ); 
