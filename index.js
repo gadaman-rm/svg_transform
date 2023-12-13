@@ -6,6 +6,34 @@ let cx = x + width / 2;
 let cy = y + height / 2;
 let rotate = 0;
 
+let pastX=x;
+let pastY=y;
+let pastWidth=width;
+let pastHeight=height;
+let pastCx=pastX + pastWidth / 2;
+let pastCy=pastY + pastHeight / 2;
+let pastRotate=rotate;
+
+
+function changeProperty(newProperty)
+{
+  pastX=x;
+  pastY=y;
+  pastWidth=width;
+  pastHeight=height;
+  pastCx=pastX + pastWidth / 2;
+  pastCy=pastY + pastHeight / 2;
+  pastRotate=rotate;
+
+  x=newProperty.x;
+  y=newProperty.y;
+  width=newProperty.width;
+  height=newProperty.height;
+  cx = x + width / 2;
+  cy = y + height / 2;
+  rotate=newProperty.rotate;
+}
+
 function rotatePoint(cx, cy, x, y, angle) {
   var radians = (Math.PI / 180) * angle,
     cos = Math.cos(radians),
@@ -109,7 +137,6 @@ function redrawHelpers() {
   orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
 }
 
-
 function moveShape()
 {
   cx = x + width / 2;
@@ -125,10 +152,6 @@ function moveShape()
 }
 
 function rotateShape() {
-  // let x = parseInt(rect1.getAttribute("x"));
-  // let y = parseInt(rect1.getAttribute("y"));
-  // let width = parseInt(rect1.getAttribute("width"));
-  // let height = parseInt(rect1.getAttribute("height"));
   cx = x + width / 2;
   cy = y + height / 2;
 
@@ -139,18 +162,16 @@ function rotateShape() {
 }
 
 function makeNewSize() {
-  // let x = parseInt(rect1.getAttribute("x"));
-  // let y = parseInt(rect1.getAttribute("y"));
-  // let cx = x + width / 2;
-  // let cy = y + height / 2;
-  //let rotate=0;
+  let corners = getRectangleCorners(x, y, pastWidth, pastHeight);
+  const { newX: pastTopLeftX, newY: pastTopLeftY } = rotatePoint( pastCx, pastCy, corners.topLeftX, corners.topLeftY, rotate * -1 );
+  console.log(`pastX-x= ${pastTopLeftX-x}`);
+  console.log(`pastY-y= ${pastTopLeftY-y}`);
+  addSvgCircle(pastTopLeftX, pastTopLeftY, 5, "green");
 
   rect1.setAttribute("width", width);
   rect1.setAttribute("height", height);
 
   rect1.setAttribute("transform-origin", `${cx} ${cy}`);
-  //rect1.setAttribute("transform", `rotate(${rotate})`);
-
   redrawHelpers();
 }
 
@@ -237,30 +258,26 @@ line1.setAttribute("y2", corners.topLeftY);
 //   rotateShape();
 // }, 6000);
 
+// setTimeout(() => {
+//   x=300;
+//   y=300;
+//   moveShape();
+// }, 2000);
+
 setTimeout(() => {
-  x=300;
-  y=300;
-  moveShape();
+  let newProperty={x:x,y:y,width:width,height:height,rotate:10};
+  changeProperty(newProperty);
+  rotateShape();
 }, 2000);
 
-setTimeout(() => {
-  rotate = 10;
-  rotateShape();
-}, 4000);
+// setTimeout(() => {
+//   x=200;
+//   y=200;
+//   moveShape();
+// }, 6000);
 
 setTimeout(() => {
-  x=200;
-  y=200;
-  moveShape();
-}, 6000);
-
-
-setTimeout(() => {
-  let d=400;
-  width = d;
-  height = d;
-  cx = x + width / 2;
-  cy = y + height / 2;
+  let newProperty={x:x,y:y,width:width*2,height:height*2,rotate:10};
+  changeProperty(newProperty);
   makeNewSize();
-}, 8000);
-
+}, 4000);
