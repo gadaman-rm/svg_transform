@@ -1,5 +1,5 @@
-const x = 200;
-const y = 200;
+let x = 200;
+let y = 200;
 let width = 200;
 let height = 200;
 let cx = x + width / 2;
@@ -109,13 +109,28 @@ function redrawHelpers() {
   orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
 }
 
-function rotateShape(rotate) {
-  let x = parseInt(rect1.getAttribute("x"));
-  let y = parseInt(rect1.getAttribute("y"));
-  let width = parseInt(rect1.getAttribute("width"));
-  let height = parseInt(rect1.getAttribute("height"));
-  let cx = x + width / 2;
-  let cy = y + height / 2;
+
+function moveShape()
+{
+  cx = x + width / 2;
+  cy = y + height / 2;
+
+  rect1.setAttribute("x", x);
+  rect1.setAttribute("y", y);
+
+  rect1.setAttribute("transform-origin", `${cx} ${cy}`);
+
+  redrawHelpers();
+
+}
+
+function rotateShape() {
+  // let x = parseInt(rect1.getAttribute("x"));
+  // let y = parseInt(rect1.getAttribute("y"));
+  // let width = parseInt(rect1.getAttribute("width"));
+  // let height = parseInt(rect1.getAttribute("height"));
+  cx = x + width / 2;
+  cy = y + height / 2;
 
   rect1.setAttribute("transform-origin", `${cx} ${cy}`);
   rect1.setAttribute("transform", `rotate(${rotate})`);
@@ -123,18 +138,18 @@ function rotateShape(rotate) {
   redrawHelpers();
 }
 
-function makeNewSize(width, height) {
-  let x = parseInt(rect1.getAttribute("x"));
-  let y = parseInt(rect1.getAttribute("y"));
-  let cx = x + width / 2;
-  let cy = y + height / 2;
+function makeNewSize() {
+  // let x = parseInt(rect1.getAttribute("x"));
+  // let y = parseInt(rect1.getAttribute("y"));
+  // let cx = x + width / 2;
+  // let cy = y + height / 2;
   //let rotate=0;
 
   rect1.setAttribute("width", width);
   rect1.setAttribute("height", height);
 
   rect1.setAttribute("transform-origin", `${cx} ${cy}`);
-  rect1.setAttribute("transform", `rotate(${rotate})`);
+  //rect1.setAttribute("transform", `rotate(${rotate})`);
 
   redrawHelpers();
 }
@@ -191,22 +206,44 @@ let rightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY
 // rect1.setAttribute("transform-origin", `${newCx} ${newCy}`);
 // rect1.setAttribute("transform", `rotate(${rotate})`);
 
-rotate = 20;
-rotateShape(rotate);
+// rotate = 20;
+// rotateShape(rotate);
 
-let d=400;
-width = d;
-height = d;
-cx = x + width / 2;
-cy = y + height / 2;
+// let d=400;
+// width = d;
+// height = d;
+// cx = x + width / 2;
+// cy = y + height / 2;
 
-setTimeout(() => {
-  makeNewSize(width, height);
-}, 2000);
+// setTimeout(() => {
+//   makeNewSize();
+// }, 2000);
 
 
 // setTimeout(() => {
 //   rotate = 30;
-//   rotateShape(rotate);
+//   rotateShape();
 // }, 4000);
 
+
+// setTimeout(() => {
+//   rotate = 45;
+//   rotateShape();
+// }, 6000);
+
+setTimeout(() => {
+  x=300;
+  y=300;
+  moveShape();
+}, 2000);
+
+setTimeout(() => {
+  rotate = 10;
+  rotateShape();
+}, 4000);
+
+setTimeout(() => {
+  x=200;
+  y=200;
+  moveShape();
+}, 6000);
