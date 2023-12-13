@@ -209,10 +209,10 @@ orbit1.setAttribute("r", calculateSquareDiagonal(width, height) / 2);
 
 let corners = getRectangleCorners(x, y, width, height);
 
-let pastLeftTopCircle = addSvgCircle( corners.topLeftX, corners.topLeftY, 5, "red" ); 
-let pastRighttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
-let pastLeftBottomCircle = addSvgCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
-let pastRightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" ); 
+let pastLeftTopCircle = addSvgCircle( corners.topLeftX, corners.topLeftY, 0, "red" ); 
+let pastRighttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 0, "green" ); 
+let pastLeftBottomCircle = addSvgCircle( corners.bottomLeftX, corners.bottomLeftY, 0, "purple" ); 
+let pastRightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY, 0, "blue" ); 
 
 let leftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red"); 
 let righttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
@@ -225,88 +225,23 @@ line1.setAttribute("x2", corners.topLeftX);
 line1.setAttribute("y2", corners.topLeftY);
 
 
-// let moveMoventX=leftTopCircle.getAttribute("cx")-pastLeftTopCircle.getAttribute("cx");
-// let moveMoventY=leftTopCircle.getAttribute("cy")-pastLeftTopCircle.getAttribute("cy");
-
-//rect1.setAttribute("transform", `rotate(${0})`);
-
-// let newRectX=x+moveMoventX;
-// let newRectY=y+moveMoventY;
-
-// rect1.setAttribute("x", newRectX);
-// rect1.setAttribute("y", newRectY);
-
-// // let newCx = newRectX + width / 2;
-// // let newCy = newRectY + height / 2;
-
-// let newCx = pastLeftTopCircle.getAttribute("cx");
-// let newCy = pastLeftTopCircle.getAttribute("cy");
-
-// addSvgCircle(newCx, newCy, 5, "orange");
-
-// rect1.setAttribute("transform-origin", `${newCx} ${newCy}`);
-// rect1.setAttribute("transform", `rotate(${rotate})`);
-
-// rotate = 20;
-// rotateShape(rotate);
-
-// let d=400;
-// width = d;
-// height = d;
-// cx = x + width / 2;
-// cy = y + height / 2;
-
-// setTimeout(() => {
-//   makeNewSize();
-// }, 2000);
-
-
-// setTimeout(() => {
-//   rotate = 30;
-//   rotateShape();
-// }, 4000);
-
-
-// setTimeout(() => {
-//   rotate = 45;
-//   rotateShape();
-// }, 6000);
-
-// setTimeout(() => {
-//   x=300;
-//   y=300;
-//   moveShape();
-// }, 2000);
-
 setTimeout(() => {
-  let newProperty={x:x,y:y,width:width,height:height,rotate:0};
+  let newProperty={x:x,y:y,width:width,height:height,rotate:10};
   changeProperty(newProperty);
   rotateShape();
 }, 2000);
-
-// setTimeout(() => {
-//   x=200;
-//   y=200;
-//   moveShape();
-// }, 6000);
 
 setTimeout(() => {
   let newProperty={x:x,y:y,width:width*2,height:height,rotate:rotate};
   changeProperty(newProperty);
   makeNewSize();
+  newProperty={x:x-chageOnResizeX,y:y-chageOnResizeY,width:width,height:height,rotate:rotate};
+  changeProperty(newProperty);
+  moveShape();
 }, 4000);
 
 setTimeout(() => {
-  let newProperty={x:x-chageOnResizeX,y:y-chageOnResizeY,width:width,height:height,rotate:rotate};
+  let newProperty={x:400,y:y,width:width,height:height,rotate:rotate};
   changeProperty(newProperty);
   moveShape();
-  //makeNewSize();
-}, 4001);
-
-
-setTimeout(() => {
-  let newProperty={x:x+200,y:y,width:width,height:height,rotate:rotate};
-  changeProperty(newProperty);
-  moveShape();
-  //makeNewSize();
 }, 6000);
