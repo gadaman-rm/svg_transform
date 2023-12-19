@@ -21,32 +21,71 @@ function calculateSquareDiagonal(width, height) {
     return diagonal;
 }
 
+function rotatePoint(cx, cy, x, y, angle) {
+    var radians = (Math.PI / 180) * angle,
+        cos = Math.cos(radians),
+        sin = Math.sin(radians),
+        newX = cos * (x - cx) + sin * (y - cy) + cx,
+        newY = cos * (y - cy) - sin * (x - cx) + cy;
+    return { newX, newY };
+}
+
+function getRectangleCorners(x, y, width, height) {
+    const topLeftX = x;
+    const topLeftY = y;
+
+    const topRightX = x + width;
+    const topRightY = y;
+
+    const bottomRightX = x + width;
+    const bottomRightY = y + height;
+
+    const bottomLeftX = x;
+    const bottomLeftY = y + height;
+
+    return {
+        topLeftX,
+        topLeftY,
+        topRightX,
+        topRightY,
+        bottomRightX,
+        bottomRightY,
+        bottomLeftX,
+        bottomLeftY,
+    };
+}
 
 let scaleX = 1;
-let scaleY = 1;
+let scaleY = 2;
 
-let x = 300;
-let y = 300;
+let x = 200;
+let y = 100;
 
 let width = 200;
 let height = 200;
 
-let cx = x + width*scaleX / 2;
-let cy = y + height*scaleY / 2;
+let cx = x + width * scaleX / 2;
+let cy = y + height * scaleY / 2;
 
-let scaledWidth=width*scaleX;
-let scaledHeight=height*scaleY;
+let scaledWidth = width * scaleX;
+let scaledHeight = height * scaleY;
 
-let rotateCx = width*scaleX / 2;
-let rotateCy = height*scaleY / 2;
+let rotateCx = width * scaleX / 2;
+let rotateCy = height * scaleY / 2;
 
-let rotate = 10;
+let rotate = 30;
 
 const rect = document.querySelector("#rect");
 const orbit = document.querySelector("#orbit");
 let group = document.querySelector('#group');
 
-let leftTopCircle = addSvgCircle(x, y, 5, "red");
+
+let pastLeftTopCircle = addSvgCircle(x, y, 5, "red");
+
+let corners = getRectangleCorners(x, y, scaledWidth, scaledHeight);
+const { newX: newTopLeftX, newY: newTopLeftY } = rotatePoint(cx, cy, corners.topLeftX, corners.topLeftY, rotate * -1);
+let leftTopCircle = addSvgCircle(newTopLeftX, newTopLeftY, 5, "blue");
+
 let origin = addSvgCircle(cx, cy, 5, "orange");
 
 rect.setAttribute("x", 0);
