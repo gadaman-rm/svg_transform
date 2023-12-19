@@ -1,21 +1,3 @@
-// Get the group element by its ID
-//var group = document.getElementById('group');
-
-// Get the bounding box of the group
-
-
-//group.setAttribute("transform", 'translate(0, 0) rotate(45, 100, 100) scale(1)');
-//group.setAttribute("transform", 'translate(-100, -100) scale(2)');
-//group.setAttribute("transform", 'translate(0, 0) scale(1)');
-//group.setAttribute("transform", 'translate(-100, -100) scale(2) rotate(10, 150, 150)');
-
-// var bbox = group.getBBox();
-// console.log('x:', bbox.x);
-// console.log('y:', bbox.y);
-// console.log('width:', bbox.width);
-// console.log('height:', bbox.height);
-
-
 function addSvgCircle(x, y, radius, color) {
     const svgElement = document.getElementById("container");
     const svgNS = "http://www.w3.org/2000/svg";
@@ -40,25 +22,25 @@ function calculateSquareDiagonal(width, height) {
 }
 
 
-let scale = 1;
+let scaleX = 1;
+let scaleY = 1;
 
-let x = 200;
-let y = 200;
+let x = 300;
+let y = 300;
 
 let width = 200;
 let height = 200;
 
-let cx = x + width*scale / 2;
-let cy = y + height*scale / 2;
+let cx = x + width*scaleX / 2;
+let cy = y + height*scaleY / 2;
 
-let scaledWidth=width*scale;
-let scaledHeight=height*scale;
+let scaledWidth=width*scaleX;
+let scaledHeight=height*scaleY;
 
-let rotateCx = width*scale / 2;
-let rotateCy = height*scale / 2;
+let rotateCx = width*scaleX / 2;
+let rotateCy = height*scaleY / 2;
 
-let rotate = 30;
-
+let rotate = 10;
 
 const rect = document.querySelector("#rect");
 const orbit = document.querySelector("#orbit");
@@ -76,10 +58,8 @@ orbit.setAttribute("cx", cx);
 orbit.setAttribute("cy", cy);
 orbit.setAttribute("r", calculateSquareDiagonal(scaledWidth, scaledHeight) / 2);
 
-
-group.setAttribute("transform", `translate(${x}, ${y}) scale(${scale})`);
-group.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotate}, ${rotateCx}, ${rotateCy}) scale(${scale})`);
-
+group.setAttribute("transform", `translate(${x}, ${y}) scale(${scaleX} ${scaleY})`);
+group.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotate}, ${rotateCx}, ${rotateCy}) scale(${scaleX} ${scaleY})`);
 
 let bbox = group.getBBox();
 console.log('x:', bbox.x);
