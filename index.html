@@ -1,25 +1,13 @@
-<!DOCTYPE html>
-<html>
-
-<head>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rotated SVG</title>
-    <style>
-    </style>
-</head>
-
-<body>
-    <div>
-        <svg width="100dvw" height="100dvh" overflow="visible" preserve-aspect-ratio="none" id="container">
-
-            <rect id="rect1" fill="none" stroke="red" stroke-width="2" />
-            <circle id="origin1" fill="red" />
-            <circle id="orbit1" fill="none" stroke="black" stroke-width="2" stroke-dasharray="5,5"/>
-            <line id="line1" stroke="red" stroke-dasharray="5,5" />
-
-        </svg>
-    </div>
-
-    <script src="./index.js"></script>
-</body>
-
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
