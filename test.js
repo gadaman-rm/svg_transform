@@ -36,7 +36,7 @@ function changeProperty(newProperty)
     rotate = newProperty.rotate;
 }
 
-function addSvgCircle(x, y, radius, color) {
+function addHelperMarkerCircle(x, y, radius, color) {
     const svgNS = "http://www.w3.org/2000/svg";
     const circle = document.createElementNS(svgNS, "circle");
 
@@ -52,7 +52,24 @@ function addSvgCircle(x, y, radius, color) {
     return circle;
 }
 
-function addSvgLine(startX,startY,endX,endY)
+function addHelperOrbitCircle(x, y, radius, color) {
+    const svgNS = "http://www.w3.org/2000/svg";
+    const circle = document.createElementNS(svgNS, "circle");
+
+    circle.setAttribute("cx", x);
+    circle.setAttribute("cy", y);
+    circle.setAttribute("r", radius);
+    circle.setAttribute("fill", "none");
+    circle.setAttribute("stroke", color);
+    circle.setAttribute("stroke-width", 2);
+    circle.setAttribute("stroke-dasharray","5,5");
+
+    containerSvg.appendChild(circle);
+
+    return circle;
+}
+
+function addHelperLine(startX,startY,endX,endY)
 {
     const svgNS = "http://www.w3.org/2000/svg";
     const line = document.createElementNS(svgNS, "line");
@@ -62,6 +79,7 @@ function addSvgLine(startX,startY,endX,endY)
     line.setAttribute("x2", endX);
     line.setAttribute("y2", endY);
     line.setAttribute("stroke","red");
+    line.setAttribute("stroke-width", 2);
     line.setAttribute("stroke-dasharray","5,5");
     
     containerSvg.appendChild(line);
@@ -169,23 +187,18 @@ function rotateShape() {
 function makeNewSize() {
     let pastCorners = getRectangleCorners(x, y, pastWidth, pastHeight);
     const { newX: pastTopLeftX, newY: pastTopLeftY } = rotatePoint( pastCx, pastCy, pastCorners.topLeftX, pastCorners.topLeftY, rotate * -1 );
-    // console.log(`pastX-x= ${pastTopLeftX-x}`);
-    // console.log(`pastY-y= ${pastTopLeftY-y}`);
-    // addSvgCircle(pastTopLeftX, pastTopLeftY, 5, "green");
-  
+    
     let newCorners = getRectangleCorners(x, y, width, height);
     const { newX: newTopLeftX, newY: newTopLeftY } = rotatePoint( cx, cy, newCorners.topLeftX, newCorners.topLeftY, rotate * -1 );
-    // console.log(`newX-x= ${newTopLeftX-x}`);
-    // console.log(`newY-y= ${newTopLeftY-y}`);
-    // addSvgCircle(newTopLeftX, newTopLeftY, 5, "blue");
-  
+    
     chageOnResizeX=newTopLeftX-pastTopLeftX;
     chageOnResizeY=newTopLeftY-pastTopLeftY;
-  
-    console.log(`chageOnResizeX= ${chageOnResizeX}`);
-    console.log(`chageOnResizeY= ${chageOnResizeY}`);
-  
-    group.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotate}, ${rotateCx}, ${rotateCy}) scale(${scaleX} ${scaleY})`);
+
+    group.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotate}, ${rotateCx}, ${rotateCy}) scale(${scaleX} ${scaleY})`)
+    
+    newProperty={x:x-chageOnResizeX,y:y-chageOnResizeY,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
+    changeProperty(newProperty);
+    group.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotate}, ${rotateCx}, ${rotateCy}) scale(${scaleX} ${scaleY})`)
 
     redrawHelpers();
 }
@@ -194,8 +207,8 @@ function makeNewSize() {
 let x = 0;
 let y = 0;
 
-let width = 200;
-let height = 200;
+let width = 100;
+let height = 100;
 
 let scaleX = 1;
 let scaleY = 1;
@@ -210,7 +223,6 @@ let rotateCx = width * scaleX / 2;
 let rotateCy = height * scaleY / 2;
 
 let rotate = 0;
-
 
 
 let pastX = x;
@@ -236,85 +248,86 @@ let pastRotate = rotate;
 
 let containerSvg = document.getElementById("container");
 let rect = document.querySelector("#rect");
-let orbit = document.querySelector("#orbit");
 let group = document.querySelector('#group');
 
 
 let corners = getRectangleCorners(x, y, scaledWidth, scaledHeight);
 
-let pastLeftTopCircle = addSvgCircle( corners.topLeftX, corners.topLeftY, 5, "red" ); 
-let pastRighttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
-let pastLeftBottomCircle = addSvgCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
-let pastRightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" ); 
+let pastLeftTopCircle = addHelperMarkerCircle( corners.topLeftX, corners.topLeftY, 5, "red" ); 
+let pastRighttTopCircle = addHelperMarkerCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
+let pastLeftBottomCircle = addHelperMarkerCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
+let pastRightBottomCircle = addHelperMarkerCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" ); 
 
-let leftTopCircle = addSvgCircle(corners.topLeftX, corners.topLeftY, 5, "red"); 
-let righttTopCircle = addSvgCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
-let leftBottomCircle = addSvgCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
-let rightBottomCircle = addSvgCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" );
+let leftTopCircle = addHelperMarkerCircle(corners.topLeftX, corners.topLeftY, 5, "red"); 
+let righttTopCircle = addHelperMarkerCircle( corners.topRightX, corners.topRightY, 5, "green" ); 
+let leftBottomCircle = addHelperMarkerCircle( corners.bottomLeftX, corners.bottomLeftY, 5, "purple" ); 
+let rightBottomCircle = addHelperMarkerCircle( corners.bottomRightX, corners.bottomRightY, 5, "blue" );
 
-let origin = addSvgCircle(cx, cy, 5, "orange");
-let line=addSvgLine(cx, cy,corners.topLeftX,corners.topLeftY);
+let origin = addHelperMarkerCircle(cx, cy, 5, "orange");
+let line=addHelperLine(cx, cy,corners.topLeftX,corners.topLeftY);
+let orbit =addHelperOrbitCircle(cx,cy,calculateSquareDiagonal(scaledWidth, scaledHeight) / 2,"red")
 
-rect.setAttribute("x", 0);
-rect.setAttribute("y", 0);
 rect.setAttribute("width", width);
 rect.setAttribute("height", height);
 
-orbit.setAttribute("cx", cx);
-orbit.setAttribute("cy", cy);
-orbit.setAttribute("r", calculateSquareDiagonal(scaledWidth, scaledHeight) / 2);
 
 group.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotate}, ${rotateCx}, ${rotateCy}) scale(${scaleX} ${scaleY})`);
 
 
-// group.setAttribute("transform", `translate(${x}, ${y}) scale(${scaleX} ${scaleY})`);
-// group.setAttribute("transform", `translate(${x}, ${y}) rotate(${rotate}, ${rotateCx}, ${rotateCy}) scale(${scaleX} ${scaleY})`);
+setTimeout(() => {
+    let newProperty={x:x+100,y:y,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
+    changeProperty(newProperty);
+    moveShape();
+  }, 2000);
 
-// redrawHelpers();
+setTimeout(() => {
+    let newProperty={x:x,y:y,scaleX:scaleX,scaleY:scaleY,rotate:rotate+10};
+    changeProperty(newProperty);
+    rotateShape();
+  }, 4000);
 
-// let bbox = group.getBBox();
-// console.log('x:', bbox.x);
-// console.log('y:', bbox.y);
-// console.log('width:', bbox.width);
-// console.log('height:', bbox.height);
+setTimeout(() => {
+    let newProperty={x:x,y:y+100,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
+    changeProperty(newProperty);
+    moveShape();
+  }, 6000);
+
+setTimeout(() => {
+    let newProperty={x:x,y:y,scaleX:scaleX*2,scaleY:scaleY,rotate:rotate};
+    changeProperty(newProperty);
+    makeNewSize();
+
+  }, 8000);
+
+  let rotatInterval;
+
+setTimeout(() => {
+    rotatInterval=setInterval(() => {
+        let newProperty={x:x,y:y,scaleX:scaleX,scaleY:scaleY,rotate:rotate+2};
+        changeProperty(newProperty);
+        rotateShape();
+    }, 20);
+    },10000);
 
 
-// setTimeout(() => {
-//     let newProperty={x:x+100,y:y,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
-//     changeProperty(newProperty);
-//     moveShape();
-//   }, 2000);
+let addScale=0.1;
+setTimeout(() => {
+    clearInterval(rotatInterval);
+    setInterval(() => {
+        let newProperty={x:x,y:y,scaleX:scaleX,scaleY:scaleY+addScale,rotate:rotate};
+        changeProperty(newProperty);
+        makeNewSize();
+        if(scaleY>4)
+            addScale=-0.1;
+        if(scaleY<1)
+            addScale=0.1;
+    }, 10);
+    },20000);
 
-// setTimeout(() => {
-//     let newProperty={x:x,y:y,scaleX:scaleX,scaleY:scaleY,rotate:rotate+10};
-//     changeProperty(newProperty);
-//     rotateShape();
-//   }, 4000);
 
-// setTimeout(() => {
-//     let newProperty={x:x,y:y,scaleX:scaleX*2,scaleY:scaleY,rotate:rotate};
-//     changeProperty(newProperty);
-//     makeNewSize();
-//     newProperty={x:x-chageOnResizeX,y:y-chageOnResizeY,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
-//     changeProperty(newProperty);
-//     moveShape();
-//   }, 6000);
-
-// setTimeout(() => {
-//     let newProperty={x:x,y:y,scaleX:scaleX,scaleY:scaleY,rotate:rotate+10};
-//     changeProperty(newProperty);
-//     rotateShape();
-//   }, 8000);
-
-// setTimeout(() => {
-//     let newProperty={x:x,y:y+100,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
-//     changeProperty(newProperty);
-//     moveShape();
-//   }, 10000);
-
-let newProperty={x:x+200,y:y+200,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
-changeProperty(newProperty);
-moveShape();
-rotateShape();
-makeNewSize();
+// let newProperty={x:x+200,y:y+200,scaleX:scaleX,scaleY:scaleY,rotate:rotate};
+// changeProperty(newProperty);
+// moveShape();
+// rotateShape();
+// makeNewSize();
 
